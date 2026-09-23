@@ -1,0 +1,104 @@
+### for every new call
+### get the service document
+
+http://localhost:4004/odata/v4/CatalogService
+
+### get the service document
+http://localhost:4004/odata/v4/CatalogService/$metadata
+
+### get the employee set
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+
+### get the employee set - $count
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet/$count
+
+### get single employee data - by key
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet(ID='02BD2137-0890-1EEA-A6C2-BB55C197C7FB')
+
+### pagination - load chunk by chunk
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$top=2&$skip=2
+
+### GET with filtering - $filter --- > simple filter
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=BANKNAME eq 'My Bank of San Francisco'
+
+### GET with filtering - $filter --- > pattern search LIKE
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=contains(NAME_FIRST,'Su')
+
+### GET with filtering - $filter --- > lamda function
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet
+
+### GET single Purchase Order - $filter --- > lamda function
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/02BD2137-0890-1EEA-A6C2-BB55C1979000
+
+### GET single Purchase Order  Items- $filter --- > lamda function
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/02BD2137-0890-1EEA-A6C2-BB55C1979000?$expand=ITEMS
+
+### GET single Purchase Order and Items
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet?$expand=ITEMS
+
+### GET single Purchase Order - $filter --- > lamda function - all or any(filter item property)
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet?$expand=ITEMS&$filter=ITEMS/all(wa:wa/GROSS_AMOUNT gt 1200)
+
+### GET single Purchase Order - $filter --- > lamda function - all or any(filter item property)
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet?$expand=ITEMS&$filter=ITEMS/any(wa:wa/GROSS_AMOUNT gt 1200)
+
+
+### Create the employee set 
+POST http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+Content-Type: application/json
+
+    {
+  
+      "NAME_FIRST": "Sudha",
+      "NAME_MIDDLE": null,
+      "NAME_LAST": "CHOUDHURY",
+      "NAME_INITIALS": null,
+      "SEX": "F",
+      "LANGUAGE": "E",
+      "PHONE_NUMBER": "+1 224 374 524",
+      "EMAIL": "sally.spring@itelo.info",
+      "LOGINNAME": "SPRINGS",
+      "CURRENCY_code": "USD",
+      "SALARYAMOUNT": "1000000.00",
+      "ACCOUNTNUMBER": "111222333",
+      "BANKID": "510000655",
+      "BANKNAME": "NAB",
+      "COUNTRY": null
+    }
+
+### Patch the employee set 
+PATCH  http://localhost:4004/odata/v4/CatalogService/EmployeeSet/ecf79a01-19a7-4edf-8659-69cbb84c32c2
+Content-Type: application/json
+
+    {
+      "SALARYAMOUNT": "2200"      
+    }  
+   
+### Patch the employee set 
+DELETE  http://localhost:4004/odata/v4/CatalogService/EmployeeSet/c7884c82-6645-4c63-b775-b54584338815
+
+
+### Patch the employee set 
+GET   http://localhost:4004/odata/v4/CDSService
+
+### Get Single Product set 
+GET   http://localhost:4004/odata/v4/CDSService/ProductSet
+
+### on demand join   
+GET   http://localhost:4004/odata/v4/CDSService/ProductSet/74867AD200E41EDBA5D8B06B26EB4052?$expand=To_Items
+
+### deep insert - header & item together  
+
+
+### Get Call
+GET http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/02BD2137-0890-1EEA-A6C2-BB55C1979000
+### Post Call - Action
+POST http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/02BD2137-0890-1EEA-A6C2-BB55C1979000/boost
+Content-Type:  application/json
+
+{
+
+}
+
+### Get top 3 expensive Purchase Orders
+GET http://localhost:4004/odata/v4/CatalogService/getMostExpOrders(zkas=2)

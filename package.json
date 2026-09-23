@@ -1,0 +1,25 @@
+{
+  "name": "mycapapp",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "github:cap-js-community/odata-v2-adapter",
+    "@cap-js/hana": "^3",
+    "@sap/cds": "^10"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^3",
+    "cds-plugin-ui5": "^0.17.0"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-manageorders": "cds watch --open debsahab.manageorders/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "private": true,
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/manageorders"
+  ]
+}
